@@ -16,38 +16,34 @@
 
 package config
 
-import org.scalatest.MustMatchers
-import org.scalatestplus.play.PlaySpec
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import uk.gov.customs.test.CustomsSpec
 
-class AppConfigSpec extends PlaySpec with MustMatchers with GuiceOneAppPerSuite {
-
-  val cfg = app.injector.instanceOf[AppConfig]
+class AppConfigSpec extends CustomsSpec {
 
   "app config" should {
 
     "have assets prefix" in {
-      cfg.assetsPrefix must be("http://localhost:9032/assets/2.149.0")
+      appConfig.assetsPrefix must be("http://localhost:9032/assets/2.149.0")
     }
 
     "have analytics token" in {
-      cfg.analyticsToken must be("N/A")
+      appConfig.analyticsToken must be("N/A")
     }
 
     "have analytics host" in {
-      cfg.analyticsHost must be("auto")
+      appConfig.analyticsHost must be("auto")
     }
 
     "have report a problem partial URL" in {
-      cfg.reportAProblemPartialUrl must be("http://localhost:9250/contact/problem_reports_ajax?service=MyService")
+      appConfig.reportAProblemPartialUrl must be("http://localhost:9250/contact/problem_reports_ajax?service=MyService")
     }
 
     "have report a problem non-JS URL" in {
-      cfg.reportAProblemNonJSUrl must be("http://localhost:9250/contact/problem_reports_nonjs?service=MyService")
+      appConfig.reportAProblemNonJSUrl must be("http://localhost:9250/contact/problem_reports_nonjs?service=MyService")
     }
 
     "have app name" in {
-      cfg.appName must be("cds-implementation-patterns-frontend")
+      appConfig.appName must be("cds-implementation-patterns-frontend")
     }
 
   }

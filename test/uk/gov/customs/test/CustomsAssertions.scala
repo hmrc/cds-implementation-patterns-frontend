@@ -14,24 +14,8 @@
  * limitations under the License.
  */
 
-package controllers
+package uk.gov.customs.test
 
-import uk.gov.customs.test.{CustomsSpec, HtmlAssertions, HttpAssertions, RequestHandlerBehaviours}
+import org.scalatest.MustMatchers
 
-class HelloWorldControllerSpec extends CustomsSpec
-  with RequestHandlerBehaviours
-  with HttpAssertions
-  with HtmlAssertions {
-
-  "GET /" should {
-
-    "return 200" in withRequest(GET, uriWithContextPath("/hello-world")) {
-      wasOk
-    }
-
-    "return HTML" in withRequest(GET, uriWithContextPath("/hello-world")) {
-      wasHtml
-    }
-
-  }
-}
+trait CustomsAssertions extends MustMatchers with CustomsFutures

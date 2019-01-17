@@ -14,24 +14,14 @@
  * limitations under the License.
  */
 
-package controllers
+package uk.gov.customs.test
 
-import uk.gov.customs.test.{CustomsSpec, HtmlAssertions, HttpAssertions, RequestHandlerBehaviours}
+import org.scalatest.concurrent.ScalaFutures
 
-class HelloWorldControllerSpec extends CustomsSpec
-  with RequestHandlerBehaviours
-  with HttpAssertions
-  with HtmlAssertions {
+import scala.concurrent.duration._
 
-  "GET /" should {
+trait CustomsFutures extends ScalaFutures {
 
-    "return 200" in withRequest(GET, uriWithContextPath("/hello-world")) {
-      wasOk
-    }
+  implicit lazy val patience: PatienceConfig = PatienceConfig(timeout = 5.seconds, interval = 50.milliseconds) // be more patient than the default
 
-    "return HTML" in withRequest(GET, uriWithContextPath("/hello-world")) {
-      wasHtml
-    }
-
-  }
 }
