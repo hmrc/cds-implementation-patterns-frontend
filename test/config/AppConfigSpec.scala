@@ -17,9 +17,10 @@
 package config
 
 import org.scalatest.MustMatchers
-import org.scalatestplus.play.{OneAppPerSuite, PlaySpec}
+import org.scalatestplus.play.PlaySpec
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-class AppConfigSpec extends PlaySpec with MustMatchers with OneAppPerSuite {
+class AppConfigSpec extends PlaySpec with MustMatchers with GuiceOneAppPerSuite {
 
   val cfg = app.injector.instanceOf[AppConfig]
 
@@ -44,6 +45,11 @@ class AppConfigSpec extends PlaySpec with MustMatchers with OneAppPerSuite {
     "have report a problem non-JS URL" in {
       cfg.reportAProblemNonJSUrl must be("http://localhost:9250/contact/problem_reports_nonjs?service=MyService")
     }
+
+    "have app name" in {
+      cfg.appName must be("cds-implementation-patterns-frontend")
+    }
+
   }
 
 }
