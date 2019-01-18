@@ -27,7 +27,7 @@ trait RequestHandlerBehaviours extends CustomsSpec {
 
   val errorHandler: ErrorHandler = component[ErrorHandler]
 
-  val contextPath: String = "/cds-implementation-patterns-frontend"
+  val contextPath: String = "/fizzbuzz"
 
   val GET: String = "GET"
 
