@@ -23,7 +23,7 @@ class AppConfigSpec extends CustomsSpec {
   "app config" should {
 
     "have assets prefix" in {
-      appConfig.assetsPrefix must be("http://localhost:9032/assets/2.149.0")
+      appConfig.assetsPrefix must be(s"${appConfig.assets.url}${appConfig.assets.version}")
     }
 
     "have analytics token" in {
@@ -44,6 +44,10 @@ class AppConfigSpec extends CustomsSpec {
 
     "have app name" in {
       appConfig.appName must be("cds-implementation-patterns-frontend")
+    }
+
+    "have assets frontend version" in {
+      appConfig.assets.version must be("3.3.2")
     }
 
   }
