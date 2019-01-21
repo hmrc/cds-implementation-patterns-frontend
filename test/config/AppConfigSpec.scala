@@ -50,6 +50,18 @@ class AppConfigSpec extends CustomsSpec {
       appConfig.assets.version must be("3.3.2")
     }
 
+    "specify appName as keystore source" in {
+      appConfig.microservice.services.keystore.defaultSource must be(appConfig.appName)
+    }
+
+    "specify http://localhost:8400 as keystore baseUri" in {
+      appConfig.microservice.services.keystore.baseUri must be("http://localhost:8400")
+    }
+
+    "specify 'keystore' as cache domain" in {
+      appConfig.microservice.services.keystore.domain must be("keystore")
+    }
+
   }
 
 }

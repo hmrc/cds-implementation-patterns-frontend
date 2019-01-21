@@ -18,11 +18,7 @@ package config
 
 import pureconfig._
 
-case class AppConfig(appName: String,
-                     contactFrontend: ContactFrontend = ContactFrontend(),
-                     assets: Assets = Assets(),
-                     googleAnalytics: GoogleAnalytics = GoogleAnalytics(),
-                     microservice: Microservice = Microservice()) {
+case class AppConfig(appName: String, contactFrontend: ContactFrontend, assets: Assets, googleAnalytics: GoogleAnalytics, microservice: Microservice) {
 
   lazy val assetsPrefix = assets.prefix
   lazy val analyticsToken = googleAnalytics.token
@@ -52,6 +48,10 @@ case class Assets(version: String = "2.149.0", url: String = "http://localhost:9
 
 case class GoogleAnalytics(token: String = "N/A", host: String = "auto")
 
-case class Microservice(services: Services = Services())
+case class Microservice(services: Services)
 
-case class Services()
+case class Services(keystore: Keystore)
+
+case class Keystore(protocol: String = "https", host: String, port: Int, defaultSource: String, domain: String) {
+  lazy val baseUri: String = s"$protocol://$host:$port"
+}
