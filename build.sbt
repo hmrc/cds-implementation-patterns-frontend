@@ -20,6 +20,7 @@ libraryDependencies ++= Seq(
   "com.github.pureconfig"   %% "pureconfig"               % "0.9.2",
   "eu.timepit"              %% "refined"                  % "0.9.2",
   "eu.timepit"              %% "refined-pureconfig"       % "0.9.2",
+  "uk.gov.hmrc"             %% "http-caching-client"      % "8.0.0",
 
   "org.scalatest"           %% "scalatest"                % "3.0.4"                 % "test",
   "org.jsoup"               %  "jsoup"                    % "1.10.2"                % "test",
