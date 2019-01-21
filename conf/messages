@@ -1,0 +1,11 @@
+# start page
+
+page.start.heading = Calculate your fizzbuzz obligation
+page.start.use.tagline = Use this service to:
+page.start.use.item.one = Determine whether you are a fizz, buzz, or fizzbuzz today
+page.start.who.tagline = Who can use this?
+page.start.who.item.one = FizzBuzzers who need to determine their fizzbuzz obligation
+page.start.need.tagline = You will need:
+page.start.need.item.one = your <a href="https://www.gov.uk/government-gateway">Government Gateway</a> details
+page.start.need.item.two = a <code>FIZZ-BUZZ</code> enrolment
+page.start.button = Start now
