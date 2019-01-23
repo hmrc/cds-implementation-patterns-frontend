@@ -28,6 +28,7 @@ import uk.gov.hmrc.auth.core.retrieve.{Credentials, Name, ~}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
 import uk.gov.hmrc.play.bootstrap.config.AuthRedirects
+import uk.gov.hmrc.play.bootstrap.http.ApplicationException
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -74,8 +75,7 @@ case class SignedInUser(credentials: Credentials,
 
   lazy val eori: Option[String] = enrolments.getEnrolment(SignedInUser.cdsEnrolmentName).flatMap(_.getIdentifier(SignedInUser.eoriIdentifierKey)).map(_.value)
 
-  // TODO throw ApplicationException which redirects to "enrol" page
-  lazy val requiredEori: String = eori.getOrElse(throw new IllegalStateException("EORI missing"))
+  def requiredEori(): String = eori.getOrElse(throw ApplicationException("domainIsIrrelevant", Results.Redirect(routes.UnauthorisedController.enrol()), "CDS enrolment required"))
 
 }
 
