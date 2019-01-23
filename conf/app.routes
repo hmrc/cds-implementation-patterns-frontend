@@ -1,4 +1,5 @@
 # microservice specific routes
 
-GET        /hello-world             controllers.HelloWorld.helloWorld
-GET        /start                   controllers.StartController.displayStartPage
+GET         /hello-world        controllers.HelloWorld.helloWorld
+GET         /start              controllers.StartController.displayStartPage
+GET         /enrol              controllers.UnauthorisedController.enrol

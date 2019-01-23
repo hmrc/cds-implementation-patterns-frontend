@@ -7,5 +7,8 @@ page.start.who.tagline = Who can use this?
 page.start.who.item.one = FizzBuzzers who need to determine their fizzbuzz obligation
 page.start.need.tagline = You will need:
 page.start.need.item.one = your <a href="https://www.gov.uk/government-gateway">Government Gateway</a> details
-page.start.need.item.two = a <code>FIZZ-BUZZ</code> enrolment
+page.start.need.item.two = a CDS enrolment
 page.start.button = Start now
+
+page.enrol.heading = You need to enrol with Customs Declaration Service (CDS)
+page.enrol.message = To use this service you need to <a href="https://www.gov.uk/eori">get an EORI number</a>

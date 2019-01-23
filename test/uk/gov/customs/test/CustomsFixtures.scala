@@ -18,9 +18,31 @@ package uk.gov.customs.test
 
 import java.util.UUID
 
+import controllers.SignedInUser
+import uk.gov.hmrc.auth.core.AffinityGroup.Individual
+import uk.gov.hmrc.auth.core.{AffinityGroup, Enrolment, EnrolmentIdentifier, Enrolments}
+import uk.gov.hmrc.auth.core.retrieve.{Credentials, Name}
+
 import scala.util.Random
 
 trait CustomsFixtures {
+
+  protected def userFixture(lastName: String = randomLastName,
+                            firstName: Option[String] = Some(randomFirstName),
+                            email: Option[String] = Some(randomEmail),
+                            eori: Option[String] = Some(randomString(8)),
+                            affinityGroup: Option[AffinityGroup] = Some(Individual),
+                            internalId: Option[String] = Some(randomString(16))): SignedInUser = SignedInUser(
+    Credentials(randomString(8), "GovernmentGateway"),
+    Name(firstName, Some(lastName)),
+    email,
+    affinityGroup,
+    internalId,
+    Enrolments(
+      if (eori.isDefined) Set(Enrolment(SignedInUser.cdsEnrolmentName, Seq(EnrolmentIdentifier(SignedInUser.eoriIdentifierKey, eori.get)), "activated"))
+      else Set.empty
+    )
+  )
 
   protected def randomUUID: String = UUID.randomUUID().toString
 

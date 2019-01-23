@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2019 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,26 +12,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package services
+@import config.AppConfig
+@()(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
-import uk.gov.customs.test.CustomsSpec
-
-class DateTimeServiceImplSpec extends CustomsSpec {
-
-  val service = new DateTimeServiceImpl
-
-  "now" should {
-
-    "return current date time" in {
-      val before = System.currentTimeMillis()
-      val now = service.now().getMillis
-      val after = System.currentTimeMillis()
-      now must be >= before
-      now must be <= after
-    }
-
-  }
+@main_template(title = messages("page.enrol.heading"), bodyClasses = None) {
+    <h1 class="heading-xlarge">@messages("page.enrol.heading")</h1>
+    <p>@Html(messages("page.enrol.message"))</p>
 
 }

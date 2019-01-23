@@ -14,24 +14,20 @@
  * limitations under the License.
  */
 
-package services
+package controllers
 
-import uk.gov.customs.test.CustomsSpec
+import config.AppConfig
+import javax.inject.{Inject, Singleton}
+import play.api.i18n.MessagesApi
+import play.api.mvc.{Action, AnyContent}
 
-class DateTimeServiceImplSpec extends CustomsSpec {
+import scala.concurrent.Future
 
-  val service = new DateTimeServiceImpl
+@Singleton
+class UnauthorisedController @Inject()(implicit val appConfig: AppConfig, val messagesApi: MessagesApi) extends CustomsController {
 
-  "now" should {
-
-    "return current date time" in {
-      val before = System.currentTimeMillis()
-      val now = service.now().getMillis
-      val after = System.currentTimeMillis()
-      now must be >= before
-      now must be <= after
-    }
-
+  def enrol: Action[AnyContent] = Action.async { implicit req =>
+    Future.successful(Ok(views.html.enrol()))
   }
 
 }
