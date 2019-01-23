@@ -22,4 +22,5 @@
     @main_template(title = messages("page.result.heading"), bodyClasses = None) {
         <h1 class="heading-xlarge">@messages("page.result.heading")</h1>
         <p>@result</p>
+        <p><a href="@{routes.FizzBuzzController.displayFirstFactorForm()}">Start again</a></p>
     }

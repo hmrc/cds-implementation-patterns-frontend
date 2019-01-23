@@ -3,3 +3,8 @@
 GET         /hello-world        controllers.HelloWorld.helloWorld
 GET         /start              controllers.StartController.displayStartPage
 GET         /enrol              controllers.UnauthorisedController.enrol
+GET         /fizz               controllers.FizzBuzzController.displayFirstFactorForm
+POST        /fizz               controllers.FizzBuzzController.handleFirstFactorForm
+GET         /buzz               controllers.FizzBuzzController.displaySecondFactorForm
+POST        /buzz               controllers.FizzBuzzController.handleSecondFactorForm
+GET         /result             controllers.FizzBuzzController.displayFizzBuzzResultPage

@@ -23,47 +23,50 @@ import play.api.data.Forms._
 import play.api.i18n.MessagesApi
 import play.api.libs.json.{Json, OFormat}
 import play.api.mvc.{Action, AnyContent}
-import services.CustomsSessionCacheService
+import services.{CustomsSessionCacheService, FizzBuzzService}
 
 import scala.concurrent.Future
 
 @Singleton
-class FizzBuzzController @Inject()(cache: CustomsSessionCacheService, val messagesApi: MessagesApi, implicit val appConfig: AppConfig)
+class FizzBuzzController @Inject()(service: FizzBuzzService, cache: CustomsSessionCacheService, actions: Actions, val messagesApi: MessagesApi, implicit val appConfig: AppConfig)
   extends CustomsController {
 
   val factorForm: Form[FizzBuzzFactor] = Form(mapping(
     "value" -> number(1)
   )(FizzBuzzFactor.apply)(FizzBuzzFactor.unapply))
 
-  val displayFirstFactorForm: Action[AnyContent] = Action { implicit req =>
+  val displayFirstFactorForm: Action[AnyContent] = actions.auth { implicit req =>
     Ok(views.html.firstFactorForm(factorForm))
   }
 
-  val displaySecondFactorForm: Action[AnyContent] = Action { implicit req =>
+  val displaySecondFactorForm: Action[AnyContent] = actions.auth { implicit req =>
     Ok(views.html.secondFactorForm(factorForm))
   }
 
-  val displayFizzBuzzResultPage: Action[AnyContent] = Action.async { implicit req =>
-//    for (
-//      f1 <- cache.get("firstFactor");
-//      f2 <- cache.get("secondFactor");
-//    ) yield {
-//      f1
-//    }
-    Future.successful(Ok)
+  val displayFizzBuzzResultPage: Action[AnyContent] = actions.auth.async { implicit req =>
+    for (
+      f1 <- cache.get[FizzBuzzFactor]("firstFactor");
+      f2 <- cache.get[FizzBuzzFactor]("secondFactor");
+      res <- service.calculateFizzBuzzObligation(f1.get.value, f2.get.value)
+    ) yield Ok(views.html.result(res))
   }
 
-  val handleFirstFactorForm: Action[AnyContent] = Action.async { implicit req =>
+  val handleFirstFactorForm: Action[AnyContent] = actions.auth.async { implicit req =>
     factorForm.bindFromRequest().fold(
-      errors => Future.successful(BadRequest),
+      errors => Future.successful(BadRequest(views.html.firstFactorForm(errors))),
       success => cache.put("firstFactor", success).map { _ =>
-        Ok // actually redirect
+        Redirect(routes.FizzBuzzController.displaySecondFactorForm())
       }
     )
   }
 
-  val handleSecondFactorForm: Action[AnyContent] = Action.async { implicit req =>
-    Future.successful(Ok)
+  val handleSecondFactorForm: Action[AnyContent] = actions.auth.async { implicit req =>
+    factorForm.bindFromRequest().fold(
+      errors => Future.successful(BadRequest(views.html.secondFactorForm(errors))),
+      success => cache.put("secondFactor", success).map { _ =>
+        Redirect(routes.FizzBuzzController.displayFizzBuzzResultPage())
+      }
+    )
   }
 
 }

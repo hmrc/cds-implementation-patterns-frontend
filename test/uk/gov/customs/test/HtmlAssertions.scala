@@ -30,7 +30,12 @@ trait HtmlAssertions extends CustomsAssertions with JsoupShouldMatchers {
 
   def contentAsHtml(of: Future[Result]): Element = contentAsString(of).asBodyFragment
 
-  def includesHtmlInput(in: Future[Result], name: String, `type`: String = "text", value: String = ""): Unit =
+  def includesHtmlInput(in: Future[Result], name: String, `type`: String = "text"): Unit =
+    contentAsHtml(in) should include element withName("input").
+      withAttrValue("type", `type`).
+      withAttrValue("name", name)
+
+  def includesHtmlInputWithValue(in: Future[Result], name: String, value: String, `type`: String = "text"): Unit =
     contentAsHtml(in) should include element withName("input").
       withAttrValue("type", `type`).
       withAttrValue("name", name).

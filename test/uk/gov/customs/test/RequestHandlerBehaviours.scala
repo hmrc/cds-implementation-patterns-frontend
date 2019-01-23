@@ -17,6 +17,7 @@
 package uk.gov.customs.test
 
 import config.ErrorHandler
+import play.api.libs.crypto.CSRFTokenSigner
 import play.api.mvc._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -32,6 +33,8 @@ trait RequestHandlerBehaviours extends CustomsSpec {
   val GET: String = "GET"
 
   val POST: String = "POST"
+
+  private val csrfTokenSigner: CSRFTokenSigner = component[CSRFTokenSigner]
 
   def uriWithContextPath(path: String): String = s"$contextPath$path"
 
@@ -56,10 +59,11 @@ trait RequestHandlerBehaviours extends CustomsSpec {
                              tags: Map[String, String] = Map.empty,
                              body: Map[String, String] = Map.empty)
                             (test: Future[Result] => Unit): Unit = {
+    val token = csrfTokenSigner.generateSignedToken
     val r = FakeRequest(method, uri).
-      withHeaders(headers.toSeq: _*).
+      withHeaders((headers ++ Map("Csrf-Token" -> token)).toSeq: _*).
       withSession(session.toSeq: _*).
-      copyFakeRequest(tags = tags).
+      copyFakeRequest(tags = tags ++ Map("CSRF_TOKEN" -> token)).
       withFormUrlEncodedBody(body.toSeq: _*)
     val res: Future[Result] = route(app, r).get.recover {
       case e: Exception => errorHandler.resolveError(r, e)

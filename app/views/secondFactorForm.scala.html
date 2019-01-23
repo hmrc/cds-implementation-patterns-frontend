@@ -24,7 +24,7 @@
 
         <h1 class="heading-xlarge">@messages("form.secondFactor.heading")</h1>
 
-        @helpers.form(routes.FizzBuzzController.handleFirstFactorForm()) {
+        @helpers.form(routes.FizzBuzzController.handleSecondFactorForm()) {
             <div class="form-group">
                 @helpers.input(form("value"), '_label -> messages("form.secondFactor.label"), 'inputClass -> "form-control")
             </div>

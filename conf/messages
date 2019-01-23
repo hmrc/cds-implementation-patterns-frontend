@@ -12,3 +12,13 @@ page.start.button = Start now
 
 page.enrol.heading = You need to enrol with Customs Declaration Service (CDS)
 page.enrol.message = To use this service you need to <a href="https://www.gov.uk/eori">get an EORI number</a>
+
+form.firstFactor.heading = Please enter your fizz factor
+form.firstFactor.label = Fizz factor
+form.firstFactor.submit = Continue
+
+form.secondFactor.heading = Please enter your buzz factor
+form.secondFactor.label = Buzz factor
+form.secondFactor.submit = Continue
+
+page.result.heading = Your FizzBuzz Obligation
